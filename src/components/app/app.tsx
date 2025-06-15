@@ -11,7 +11,7 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import {
   AppHeader,
@@ -27,7 +27,8 @@ import { getUser } from '../../slices/userSlice/userSlice';
 
 const App = () => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const background = location.state?.background;
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUser());
@@ -36,7 +37,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route
@@ -88,46 +89,51 @@ const App = () => {
           }
         />
         <Route path='/*' element={<NotFound404 />} />
-        <Route
-          path='/feed/:number'
-          element={
-            <Modal
-              title={''}
-              onClose={() => {
-                history.back();
-              }}
-            >
-              <OrderInfo />
-            </Modal>
-          }
-        />{' '}
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal
-              title={''}
-              onClose={() => {
-                history.back();
-              }}
-            >
-              <IngredientDetails />
-            </Modal>
-          }
-        />{' '}
-        <Route
-          path='/profile/orders/:number'
-          element={
-            <Modal
-              title={''}
-              onClose={() => {
-                history.back();
-              }}
-            >
-              <OrderInfo />
-            </Modal>
-          }
-        />
       </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal
+                title={''}
+                onClose={() => {
+                  history.back();
+                }}
+              >
+                <OrderInfo />
+              </Modal>
+            }
+          />{' '}
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal
+                title={''}
+                onClose={() => {
+                  history.back();
+                }}
+              >
+                <IngredientDetails />
+              </Modal>
+            }
+          />{' '}
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal
+                title={''}
+                onClose={() => {
+                  history.back();
+                }}
+              >
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };
