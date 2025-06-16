@@ -21,7 +21,7 @@ type TUserState = {
 };
 
 export const initialState: TUserState = {
-  loading: false,
+  loading: true,
   error: null,
   response: null,
   registerData: null,
