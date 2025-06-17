@@ -107,7 +107,7 @@ const App = () => {
             path='/feed/:number'
             element={
               <Modal
-                title={''}
+                title={`#${location.pathname.match(/\d+/)}`}
                 onClose={() => {
                   history.back();
                 }}
@@ -120,7 +120,7 @@ const App = () => {
             path='/ingredients/:id'
             element={
               <Modal
-                title={''}
+                title={'Детали ингредиента'}
                 onClose={() => {
                   history.back();
                 }}
@@ -133,7 +133,7 @@ const App = () => {
             path='/profile/orders/:number'
             element={
               <Modal
-                title={''}
+                title={`#${location.pathname.match(/\d+/)}`}
                 onClose={() => {
                   history.back();
                 }}
